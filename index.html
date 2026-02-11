@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Supriya ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+/* LOCAL BACKGROUND */
+
+.bg{
+    position:fixed;
+    inset:0;
+    background-image:url("./background.png");
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+    filter:brightness(0.55) blur(4px);
+    transform:scale(1.08);
+}
+
+/* gradient glow */
+
+.overlay{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(
+        130deg,
+        rgba(255,94,120,0.6),
+        rgba(255,170,120,0.5),
+        rgba(255,94,160,0.5)
+    );
+}
+
+/* sparkles */
+
+.sparkle{
+    position:absolute;
+    width:7px;
+    height:7px;
+    background:white;
+    border-radius:50%;
+    opacity:0.8;
+    pointer-events:none;
+    animation:float 5s infinite ease-in-out;
+}
+
+@keyframes float{
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-35px);}
+    100%{transform:translateY(0px);}
+}
+
+/* card */
+
+.card{
+    position:relative;
+    backdrop-filter: blur(18px);
+    background:rgba(255,255,255,0.12);
+    border-radius:30px;
+    padding:55px;
+    width:430px;
+    text-align:center;
+    box-shadow:0 0 60px rgba(255,120,150,0.6);
+    animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+h1{
+    font-size:2.4rem;
+    margin-bottom:15px;
+}
+
+p{
+    font-weight:300;
+    margin-bottom:40px;
+    line-height:1.6;
+}
+
+/* buttons */
+
+button{
+    border:none;
+    padding:13px 30px;
+    margin:10px;
+    border-radius:35px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:0.35s;
+}
+
+.yes{
+    background:#ff4d6d;
+    color:white;
+}
+
+.yes:hover{
+    transform:scale(1.12);
+    box-shadow:0 0 25px #ff4d6d;
+}
+
+.no{
+    background:white;
+    color:#ff4d6d;
+}
+
+.centerYes{
+    transform:scale(1.35);
+    box-shadow:0 0 40px #ff4d6d;
+}
+
+/* message */
+
+.success{
+    display:none;
+    font-size:2rem;
+    margin-top:10px;
+    animation:fadeIn 1.2s ease;
+}
+
+.fadeOut{
+    opacity:0;
+    transition:0.7s;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC (LOCAL) -->
+
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="bg"></div>
+<div class="overlay"></div>
+
+<div class="card">
+
+    <h1>Supriya ❤️</h1>
+
+    <p id="proposalText">
+        Somehow every ordinary moment feels warmer when you're part of it.
+        If life is a long journey, I know it would be brighter with you beside me.
+    </p>
+
+    <button class="yes" id="yesBtn" onclick="accept()">Yes 💖</button>
+    <button class="no" id="noBtn" onclick="vanishNo(event)">No</button>
+
+    <div class="success" id="msg">
+        You just made me the happiest person alive ✨
+    </div>
+
+</div>
+
+<script>
+
+/* Start music on first click anywhere */
+
+document.addEventListener("click", () => {
+    document.getElementById("bgMusic").play();
+}, { once:true });
+
+/* floating sparkles */
+
+for(let i=0;i<35;i++){
+    const s=document.createElement('div');
+    s.classList.add('sparkle');
+    s.style.top=Math.random()*100+'%';
+    s.style.left=Math.random()*100+'%';
+    s.style.animationDuration=(Math.random()*3+3)+'s';
+    document.body.appendChild(s);
+}
+
+/* YES */
+
+function accept(){
+
+    const text = document.getElementById('proposalText');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const msg = document.getElementById('msg');
+
+    text.classList.add("fadeOut");
+    yesBtn.classList.add("fadeOut");
+    if(noBtn) noBtn.classList.add("fadeOut");
+
+    setTimeout(()=>{
+        text.style.display="none";
+        yesBtn.style.display="none";
+        if(noBtn) noBtn.style.display="none";
+
+        msg.style.display="block";
+    },700);
+}
+
+/* NO sparkles away */
+
+function vanishNo(e){
+
+    const noBtn = e.target;
+    const yesBtn = document.getElementById('yesBtn');
+
+    const rect = noBtn.getBoundingClientRect();
+
+    for(let i=0;i<14;i++){
+
+        const spark = document.createElement('div');
+        spark.classList.add('sparkle');
+
+        spark.style.position='fixed';
+        spark.style.top = rect.top + rect.height/2 + 'px';
+        spark.style.left = rect.left + rect.width/2 + 'px';
+
+        spark.animate([
+            { transform:'translate(0,0)', opacity:1 },
+            { transform:`translate(${(Math.random()-0.5)*160}px, ${(Math.random()-0.5)*160}px)`, opacity:0 }
+        ],{
+            duration:700
+        });
+
+        document.body.appendChild(spark);
+
+        setTimeout(()=>spark.remove(),700);
+    }
+
+    noBtn.classList.add("fadeOut");
+
+    setTimeout(()=>{
+        noBtn.remove();
+        yesBtn.classList.add('centerYes');
+    },600);
+}
+
+</script>
+
+</body>
+</html>
